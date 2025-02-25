@@ -159,6 +159,7 @@ MonoBehaviour:
   normalMat: {fileID: 6200000, guid: b61610bab2e1fc843b479bc43c0a3921, type: 2}
   canJump: 1
   jumpValue: 0
+  withShield: 0
   takeDamage: 0
   isDashing: 0
 --- !u!212 &155671832
@@ -28999,7 +29000,7 @@ Transform:
   m_GameObject: {fileID: 451002369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.964, y: -1.103, z: 0}
+  m_LocalPosition: {x: 2.363, y: -1.056, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

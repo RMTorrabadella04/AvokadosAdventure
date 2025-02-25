@@ -17,6 +17,7 @@ public class MovimientoPersonaje : MonoBehaviour
     public bool canJump = true;
     public float jumpValue = 0.0f;
 
+    public bool withShield;
     public bool takeDamage;
     public bool isDashing = false;
     private bool attacking;
@@ -41,10 +42,12 @@ public class MovimientoPersonaje : MonoBehaviour
 
         Ataque();
         Dash();
+        Shield();
 
         // Animaciones 
         Animator.SetBool("Attacking", attacking);
         Animator.SetBool("TakeDamage", takeDamage);
+        Animator.SetBool("WithShield", withShield);
     }
 
     // Movimiento y Salto
@@ -142,7 +145,8 @@ public class MovimientoPersonaje : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && !takeDamage)
+        // Para recibir daño debe estar habilitado el daño y no tener el escudo puesto
+        if (collision.gameObject.CompareTag("Enemy") && !takeDamage && !withShield)
         {
             Debug.Log("Llego primero al collision de MovimientoPersonaje");
 
@@ -160,12 +164,47 @@ public class MovimientoPersonaje : MonoBehaviour
             // Aplicamos el "dash" al personaje usando AddForce
             Rigidbody2D.AddForce(dashDirection*1.2f, ForceMode2D.Impulse); // Impulso instantáneo
         }
+
+        // Si tiene puesto el escudo solo hara el dash para atras
+
+        else if (collision.gameObject.CompareTag("Enemy") && withShield)
+        {
+            Vector2 dashDirection = (transform.position - collision.transform.position).normalized;
+
+            // Aplicamos el "dash" al personaje usando AddForce
+            Rigidbody2D.AddForce(dashDirection * 1.2f, ForceMode2D.Impulse); // Impulso instantáneo
+
+            StartCoroutine(DetenerDespuesDeGolpe());
+        }
     }
+
+    private IEnumerator DetenerDespuesDeGolpe()
+    {
+        yield return new WaitForSeconds(0.2f); // Espera 0.2 segundos (puedes ajustar el tiempo)
+
+        Rigidbody2D.velocity = Vector2.zero; // Detiene al personaje completamente
+    }
+
 
     public void DesactivateDamage()
     {
         takeDamage = false; // Permite que el personaje se mueva de nuevo
         Animator.SetBool("TakeDamage", false); // Desactiva la animación de daño
+    }
+
+    // Put the Shield
+
+    public void Shield()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && !takeDamage && Grounded && !isDashing)
+        {
+            withShield = true;
+        }
+        if (Input.GetKeyUp(KeyCode.E) && !takeDamage && Grounded && !isDashing)
+        {
+            withShield = false;
+
+        }
     }
 
     // Dash
@@ -212,11 +251,12 @@ public class MovimientoPersonaje : MonoBehaviour
 
     public void DestroyPlayer()
     {
-        Destroy(gameObject);  // Esto destruye el GameObject al que está asociado este script
+        Destroy(gameObject);  // Esto destruye el GameObject al que está asociado este script, se ejecuta cuando el prota muere
     }
 
 
     // Mas Movimiento
+
     private void FixedUpdate()
     {
         if (isDashing)
@@ -227,7 +267,7 @@ public class MovimientoPersonaje : MonoBehaviour
         else
         {
             // Movimiento horizontal normal si no estamos en medio de un dash
-            if (!takeDamage && jumpValue == 0.0f && Grounded)
+            if (!withShield && !takeDamage && jumpValue == 0.0f && Grounded)
             {
                 Rigidbody2D.velocity = new Vector2(Horizontal * Speed, Rigidbody2D.velocity.y);
             }
