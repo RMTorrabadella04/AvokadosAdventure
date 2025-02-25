@@ -43,13 +43,13 @@ public class enemiesController : MonoBehaviour
 
             movement = new Vector2(direction.x, 0);
 
-            if (direction.x > 0) // El jugador está a la derecha del enemigo
+            if (direction.x > 0) // Jugador a la derecha
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);  // Asegúrate de que la escala sea positiva en X
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
-            else if (direction.x < 0) // El jugador está a la izquierda del enemigo
+            else if (direction.x < 0) // Jugador a la izquierda
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);  // Invertimos la escala en X para hacerlo mirar hacia la izquierda
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
 
             Animator.SetBool("Running", true);
