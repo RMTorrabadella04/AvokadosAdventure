@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      walk-with-weapon-7_0: 2577286833029933485
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

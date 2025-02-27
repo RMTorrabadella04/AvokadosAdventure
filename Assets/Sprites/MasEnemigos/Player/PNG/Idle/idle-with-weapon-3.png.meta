@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      idle-with-weapon-3_0: -1601140672274621025
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

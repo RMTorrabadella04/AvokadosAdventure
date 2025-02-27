@@ -191,7 +191,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PirateCat2_0: 568747027748957900
+      PirateCat2_1: -420169268908233690
+      PirateCat2_2: 2981304115519207474
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

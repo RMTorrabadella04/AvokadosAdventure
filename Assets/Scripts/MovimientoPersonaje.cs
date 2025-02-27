@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class MovimientoPersonaje : MonoBehaviour
 {
@@ -247,6 +248,11 @@ public class MovimientoPersonaje : MonoBehaviour
     public void Muerte()
     {
         Animator.SetBool("Dead", true);
+    }
+
+    public void CambiarEscenaAMuerte()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void DestroyPlayer()

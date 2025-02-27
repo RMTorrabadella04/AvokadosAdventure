@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hit-with-weapon-A4_0: -2869298139328387363
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

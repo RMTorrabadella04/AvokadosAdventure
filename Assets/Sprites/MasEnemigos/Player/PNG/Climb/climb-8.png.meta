@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      climb-8_0: -1146376135348316896
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

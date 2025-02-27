@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      roll-6_0: -5164695152998756065
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

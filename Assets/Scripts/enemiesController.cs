@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class enemiesController : MonoBehaviour
 {
     public Transform player;
     public float detectionRadius;
+    public float attackRadius;
 
     private Vector2 movement;
 
@@ -18,6 +20,7 @@ public class enemiesController : MonoBehaviour
     public float Vida;
     public float Danyo;
     public bool takeDamage;
+    private bool canAttack = true;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,11 @@ public class enemiesController : MonoBehaviour
     void Update()
     {
         Movimiento();
+
+        if (canAttack && Vector2.Distance(transform.position, player.position) < attackRadius)
+        {
+            StartCoroutine(attack());
+        }
     }
     
     public void Movimiento()
@@ -64,6 +72,25 @@ public class enemiesController : MonoBehaviour
 
         Rigidbody2D.MovePosition(Rigidbody2D.position + movement * Speed * Time.deltaTime);
 
+    }
+
+
+
+    IEnumerator attack()
+    {
+        canAttack = false; // Bloquea el ataque mientras está en espera
+
+        Animator.SetBool("attacking", true); // Inicia la animación de ataque
+        yield return new WaitForSeconds(0.5f); // Espera la duración de la animación
+
+        yield return new WaitForSeconds(3f); // Espera antes de permitir otro ataque
+
+        canAttack = true; // Ahora puede volver a atacar
+    }
+
+    public void desactivateAttack()
+    {
+        Animator.SetBool("attacking", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -119,16 +146,24 @@ public class enemiesController : MonoBehaviour
 
     // Destruir el enemigo
 
+    public void CambiarEscenaAVictoria()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     public void DestroyEnemy()
     {
         Destroy(gameObject);  // Esto destruye el GameObject al que está asociado este script
     }
 
 
-    // Area de la busqueda
+    // Area de la busqueda y de daño
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
